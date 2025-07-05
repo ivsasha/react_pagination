@@ -17,9 +17,12 @@ export const Pagination: React.FC<Props> = ({
   const [curPage, setCurPage] = useState(currentPage);
 
   useEffect(() => {
-    setCurPage(1);
     onPageChange(currentPage);
   }, [perPage]);
+
+  useEffect(() => {
+    setCurPage(currentPage);
+  }, [currentPage]);
 
   return (
     <>
