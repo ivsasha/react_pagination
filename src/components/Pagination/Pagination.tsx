@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
 
 type Props = {
   total: number;
@@ -14,28 +13,19 @@ export const Pagination: React.FC<Props> = ({
   currentPage,
   onPageChange,
 }) => {
-  const [curPage, setCurPage] = useState(currentPage);
-
-  useEffect(() => {
-    onPageChange(currentPage);
-  }, [perPage]);
-
-  useEffect(() => {
-    setCurPage(currentPage);
-  }, [currentPage]);
-
   return (
     <>
       <ul className="pagination">
-        <li className={classNames('page-item', { disabled: curPage === 1 })}>
+        <li
+          className={classNames('page-item', { disabled: currentPage === 1 })}
+        >
           <a
             data-cy="prevLink"
             className="page-link"
             href="#prev"
-            aria-disabled={curPage === 1}
+            aria-disabled={currentPage === 1}
             onClick={() => {
-              setCurPage(curPage - 1);
-              onPageChange(curPage - 1);
+              onPageChange(currentPage - 1);
             }}
           >
             «
@@ -45,14 +35,13 @@ export const Pagination: React.FC<Props> = ({
         {Array.from({ length: Math.ceil(total / perPage) }, (_, i) => (
           <li
             key={i + 1}
-            className={`page-item${curPage === i + 1 ? ' active' : ''}`}
+            className={`page-item${currentPage === i + 1 ? ' active' : ''}`}
           >
             <a
               data-cy="pageLink"
               className="page-link"
               href={`#${i + 1}`}
               onClick={() => {
-                setCurPage(i + 1);
                 onPageChange(i + 1);
               }}
             >
@@ -62,17 +51,16 @@ export const Pagination: React.FC<Props> = ({
         ))}
         <li
           className={classNames('page-item', {
-            disabled: curPage === Math.ceil(total / perPage),
+            disabled: currentPage === Math.ceil(total / perPage),
           })}
         >
           <a
             data-cy="nextLink"
             className="page-link"
             href="#next"
-            aria-disabled={curPage === Math.ceil(total / perPage)}
+            aria-disabled={currentPage === Math.ceil(total / perPage)}
             onClick={() => {
-              setCurPage(curPage + 1);
-              onPageChange(curPage + 1);
+              onPageChange(currentPage + 1);
             }}
           >
             »
@@ -81,7 +69,7 @@ export const Pagination: React.FC<Props> = ({
       </ul>
       <ul>
         {Array.from({ length: perPage }, (_, i) => {
-          const index = (curPage - 1) * perPage + i;
+          const index = (currentPage - 1) * perPage + i;
 
           if (index >= total) {
             return;

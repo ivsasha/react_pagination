@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { getNumbers } from './utils';
 import { Pagination } from './components/Pagination';
@@ -17,6 +17,11 @@ export const App: React.FC = () => {
     setStartNumber((pages - 1) * itemPerPage + 1);
     setEndNumber(Math.min(pages * itemPerPage, 42));
   }
+
+  useEffect(() => {
+    pageChange(page);
+    setPage(1);
+  }, [itemPerPage]);
 
   return (
     <div className="container">
